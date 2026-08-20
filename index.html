@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lifestream Labs — Technology for Human Problems</title>
+<meta name="description" content="Lifestream Labs develops AI systems focused on behavioral healthcare, human understanding, personal assistance, and social impact.">
+<link rel="icon" href="logo.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #06070a;
+    --bg-raised: #0b0d12;
+    --line: rgba(255,255,255,0.08);
+    --line-strong: rgba(255,255,255,0.14);
+    --ink: #f2f3f5;
+    --ink-dim: #9aa0ab;
+    --ink-faint: #5b616c;
+    --accent: #6f8cff;
+    --accent-dim: rgba(111,140,255,0.5);
+    --behavioral: #ff8a5c;
+    --nav-cat: #6f8cff;
+    --human: #b98cff;
+    --personal: #5cd6c0;
+    --creative: #ff8ac4;
+    --maxw: 1180px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    font-weight:300;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;
+    letter-spacing:-0.02em;
+  }
+  a{color:inherit; text-decoration:none;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 32px;}
+  img{display:block; max-width:100%;}
+
+  /* ---------- NAV ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(6,7,10,0.72);
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    max-width:var(--maxw); margin:0 auto; padding:0 32px;
+    height:76px; display:flex; align-items:center; justify-content:space-between;
+  }
+  .brand{display:flex; align-items:center; gap:12px;}
+  .brand img{height:34px; width:34px;}
+  .brand-name{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:15px; letter-spacing:0.02em;}
+  .brand-name span{display:block; font-size:10px; font-weight:400; color:var(--ink-dim); letter-spacing:0.12em; margin-top:1px;}
+  .nav-links{display:flex; gap:40px; list-style:none;}
+  .nav-links a{font-size:13px; color:var(--ink-dim); letter-spacing:0.03em; transition:color .2s;}
+  .nav-links a:hover{color:var(--ink);}
+  .nav-cta{
+    font-size:13px; padding:10px 20px; border:1px solid var(--line-strong); border-radius:100px;
+    display:flex; align-items:center; gap:8px; transition:all .2s;
+  }
+  .nav-cta:hover{border-color:var(--accent); background:rgba(111,140,255,0.08);}
+  .nav-mobile{display:none;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:220px 0 140px;
+    position:relative;
+  }
+  .hero::before{
+    content:'';
+    position:absolute; top:-10%; right:-10%; width:60%; height:70%;
+    background:radial-gradient(ellipse at center, rgba(111,140,255,0.10) 0%, transparent 70%);
+    pointer-events:none; z-index:-1;
+  }
+  .eyebrow{
+    font-size:12px; letter-spacing:0.18em; color:var(--accent); font-weight:500;
+    text-transform:uppercase; margin-bottom:24px; display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{content:''; width:20px; height:1px; background:var(--accent);}
+  .hero h1{
+    font-size:clamp(42px, 6.2vw, 84px);
+    line-height:1.03;
+    max-width:920px;
+    margin-bottom:32px;
+  }
+  .hero p{
+    font-size:19px; color:var(--ink-dim); max-width:560px; margin-bottom:44px; font-weight:300;
+  }
+  .btn-primary{
+    display:inline-flex; align-items:center; gap:10px;
+    background:var(--ink); color:#06070a; font-weight:500; font-size:14px;
+    padding:16px 30px; border-radius:100px; transition:transform .2s, box-shadow .2s;
+    font-family:'Inter',sans-serif;
+  }
+  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 8px 30px rgba(255,255,255,0.15);}
+  .btn-primary svg{transition:transform .2s;}
+  .btn-primary:hover svg{transform:translateX(3px);}
+
+  /* ---------- THESIS ---------- */
+  .thesis{
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    padding:70px 0;
+  }
+  .thesis-label{
+    font-size:11px; letter-spacing:0.18em; color:var(--ink-faint); text-transform:uppercase; margin-bottom:40px;
+  }
+  .thesis-grid{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:48px;
+  }
+  .thesis-item{border-left:1px solid var(--line); padding-left:24px;}
+  .thesis-item .num{font-family:'Space Grotesk',sans-serif; font-size:12px; color:var(--accent); margin-bottom:14px; display:block;}
+  .thesis-item h3{font-size:19px; margin-bottom:10px; font-weight:600;}
+  .thesis-item p{font-size:14.5px; color:var(--ink-dim); font-weight:300; max-width:280px;}
+
+  /* ---------- SECTION HEADER ---------- */
+  .section{padding:140px 0;}
+  .section-head{margin-bottom:64px; max-width:640px;}
+  .section-head .thesis-label{margin-bottom:20px;}
+  .section-head h2{font-size:clamp(28px,3.4vw,42px); margin-bottom:18px;}
+  .section-head p{color:var(--ink-dim); font-size:16px; font-weight:300;}
+
+  /* ---------- FLAGSHIP ---------- */
+  .flagship-list{display:flex; flex-direction:column; gap:2px;}
+  .flagship{
+    display:grid; grid-template-columns:1fr 1fr; align-items:stretch;
+    border-top:1px solid var(--line);
+    transition:background .3s;
+  }
+  .flagship:last-child{border-bottom:1px solid var(--line);}
+  .flagship:hover{background:rgba(255,255,255,0.015);}
+  .flagship-media{position:relative; overflow:hidden; min-height:340px;}
+  .flagship-media img{
+    width:100%; height:100%; object-fit:cover; position:absolute; inset:0;
+    filter:saturate(0.85) brightness(0.85);
+    transition:transform .6s ease, filter .6s ease;
+  }
+  .flagship:hover .flagship-media img{transform:scale(1.035); filter:saturate(1) brightness(0.9);}
+  .flagship-media::after{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(90deg, transparent 60%, var(--bg) 100%);
+  }
+  .flagship-body{
+    padding:56px 20px 56px 56px; display:flex; flex-direction:column; justify-content:center;
+  }
+  .cat-tag{
+    font-size:11px; letter-spacing:0.14em; text-transform:uppercase; font-weight:500;
+    margin-bottom:16px; display:inline-flex; align-items:center; gap:8px; width:fit-content;
+  }
+  .cat-tag::before{content:''; width:6px; height:6px; border-radius:50%;}
+  .cat-behavioral::before{background:var(--behavioral);} .cat-behavioral{color:var(--behavioral);}
+  .cat-nav::before{background:var(--nav-cat);} .cat-nav{color:var(--nav-cat);}
+  .cat-human::before{background:var(--human);} .cat-human{color:var(--human);}
+  .cat-personal::before{background:var(--personal);} .cat-personal{color:var(--personal);}
+  .flagship-body h3{font-size:32px; margin-bottom:14px;}
+  .flagship-body p{font-size:15.5px; color:var(--ink-dim); font-weight:300; max-width:420px; margin-bottom:24px;}
+  .flagship-link{
+    font-size:13.5px; font-weight:500; display:inline-flex; align-items:center; gap:8px;
+    color:var(--ink); border-bottom:1px solid var(--line-strong); padding-bottom:4px; width:fit-content;
+    transition:border-color .2s, gap .2s;
+  }
+  .flagship-link:hover{border-color:var(--ink);}
+  .flagship-link svg{width:13px; transition:transform .2s;}
+  .flagship-link:hover svg{transform:translateX(3px);}
+
+  /* ---------- MISSION GRID (secondary) ---------- */
+  .mission-section{background:var(--bg-raised); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .mission-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line);}
+  .mission-card{background:var(--bg-raised); padding:40px 32px;}
+  .mission-card .cat-tag{margin-bottom:20px;}
+  .mission-card ul{list-style:none;}
+  .mission-card li{
+    font-size:15px; padding:10px 0; border-top:1px solid var(--line); color:var(--ink-dim);
+    display:flex; align-items:center; justify-content:space-between; transition:color .2s;
+  }
+  .mission-card li:first-of-type{border-top:none;}
+  .mission-card li:hover{color:var(--ink); cursor:default;}
+  .mission-card li span.tag{font-size:10px; color:var(--ink-faint); font-weight:400; letter-spacing:0.05em;}
+
+  /* ---------- APPROACH (how we evaluate a problem) ---------- */
+  .approach-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:40px; margin-top:20px;}
+  .approach-card{border:1px solid var(--line); border-radius:16px; padding:36px 30px; background:var(--bg-raised);}
+  .approach-card .q{font-family:'Space Grotesk',sans-serif; font-size:12px; color:var(--accent); letter-spacing:0.05em; margin-bottom:16px;}
+  .approach-card h4{font-size:18px; font-weight:600; margin-bottom:12px; font-family:'Space Grotesk',sans-serif;}
+  .approach-card p{font-size:14.5px; color:var(--ink-dim); font-weight:300;}
+
+  /* ---------- FOUNDER ---------- */
+  .founder{
+    display:grid; grid-template-columns:0.85fr 1.15fr; gap:80px; align-items:center;
+  }
+  .founder-visual{
+    aspect-ratio:4/5; border-radius:20px; border:1px solid var(--line-strong);
+    background:
+      radial-gradient(ellipse at 30% 20%, rgba(111,140,255,0.18) 0%, transparent 55%),
+      linear-gradient(160deg, #10131c 0%, #06070a 100%);
+    position:relative; overflow:hidden;
+    display:flex; align-items:flex-end; padding:36px;
+  }
+  .founder-visual::before{
+    content:''; position:absolute; inset:0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
+    background-size:26px 26px;
+    opacity:0.5;
+  }
+  .founder-visual .fv-mark{
+    position:relative; z-index:1; font-family:'Space Grotesk',sans-serif; font-size:13px; color:var(--ink-dim);
+    letter-spacing:0.08em; line-height:1.7;
+  }
+  .founder-visual .fv-mark b{display:block; color:var(--ink); font-size:15px; margin-bottom:6px;}
+  .founder-body .thesis-label{margin-bottom:20px;}
+  .founder-body h2{font-size:clamp(28px,3.2vw,38px); margin-bottom:22px;}
+  .founder-body p{color:var(--ink-dim); font-size:16px; margin-bottom:18px; font-weight:300; max-width:520px;}
+  .founder-body p strong{color:var(--ink); font-weight:500;}
+  .founder-path{
+    display:flex; gap:0; margin:32px 0; flex-wrap:wrap;
+  }
+  .path-step{
+    font-size:12.5px; color:var(--ink-dim); padding:8px 16px 8px 0; display:flex; align-items:center; gap:16px;
+  }
+  .path-step:not(:last-child)::after{content:'→'; color:var(--ink-faint); margin-left:16px;}
+
+  /* ---------- CTA BAND ---------- */
+  .cta-band{
+    padding:120px 0; text-align:center; position:relative; border-top:1px solid var(--line);
+  }
+  .cta-band::before{
+    content:''; position:absolute; top:0; left:50%; transform:translateX(-50%);
+    width:600px; height:400px;
+    background:radial-gradient(ellipse at center, rgba(111,140,255,0.12) 0%, transparent 70%);
+    pointer-events:none;
+  }
+  .cta-band h2{font-size:clamp(30px,4.5vw,54px); margin-bottom:36px; position:relative;}
+  .cta-band .btn-primary{position:relative;}
+
+  /* ---------- FOOTER ---------- */
+  footer{border-top:1px solid var(--line); padding:64px 0 40px;}
+  .footer-top{display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:60px; flex-wrap:wrap; gap:40px;}
+  .footer-cols{display:flex; gap:80px;}
+  .footer-col h5{font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:18px; font-weight:500;}
+  .footer-col a, .footer-col span{display:block; font-size:14px; color:var(--ink-dim); margin-bottom:12px;}
+  .footer-col a:hover{color:var(--ink);}
+  .footer-bottom{
+    display:flex; justify-content:space-between; align-items:center; padding-top:32px; border-top:1px solid var(--line);
+    font-size:12.5px; color:var(--ink-faint); flex-wrap:wrap; gap:16px;
+  }
+  .socials{display:flex; gap:18px;}
+  .socials a{color:var(--ink-faint); transition:color .2s;}
+  .socials a:hover{color:var(--ink);}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 900px){
+    .nav-links{display:none;}
+    .thesis-grid{grid-template-columns:1fr; gap:32px;}
+    .flagship{grid-template-columns:1fr;}
+    .flagship-media{min-height:220px;}
+    .flagship-body{padding:32px 24px;}
+    .mission-grid{grid-template-columns:1fr 1fr;}
+    .approach-grid{grid-template-columns:1fr;}
+    .founder{grid-template-columns:1fr; gap:40px;}
+    .founder-visual{aspect-ratio:16/9;}
+    .footer-cols{gap:40px; flex-wrap:wrap;}
+    .hero{padding:160px 0 90px;}
+    .section{padding:90px 0;}
+  }
+  @media (max-width:560px){
+    .mission-grid{grid-template-columns:1fr;}
+    nav{padding:0 20px;}
+    .wrap{padding:0 20px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="#" class="brand">
+      <img src="logo.webp" alt="Lifestream Labs">
+      <span class="brand-name">LIFESTREAM<span>LABS</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#mission">Mission</a></li>
+      <li><a href="#approach">Approach</a></li>
+      <li><a href="#founder">Founder</a></li>
+    </ul>
+    <a href="#work" class="nav-cta">Explore Our Work
+      <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </nav>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="eyebrow">Lifestream Labs</div>
+      <h1>Technology that solves<br>human problems.</h1>
+      <p>Lifestream Labs develops AI systems focused on behavioral healthcare, human understanding, personal assistance, and creative intelligence — built by people who have worked inside the problems they're solving.</p>
+      <a href="#work" class="btn-primary">
+        Explore Our Work
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- THESIS -->
+  <section class="thesis">
+    <div class="wrap">
+      <div class="thesis-label">Our Thesis</div>
+      <div class="thesis-grid">
+        <div class="thesis-item">
+          <span class="num">01</span>
+          <h3>Understand</h3>
+          <p>We build systems that deepen human understanding — of behavior, relationships, and the paths that shape who people become.</p>
+        </div>
+        <div class="thesis-item">
+          <span class="num">02</span>
+          <h3>Assist</h3>
+          <p>We create intelligent tools that make real help more accessible — for clinicians, case managers, and the people they serve.</p>
+        </div>
+        <div class="thesis-item">
+          <span class="num">03</span>
+          <h3>Connect</h3>
+          <p>We foster connections between people and the resources, insight, and support that move them forward.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FLAGSHIP WORK -->
+  <section class="section" id="work">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="thesis-label">Flagship Work</div>
+        <h2>A portfolio of solutions, not a list of apps.</h2>
+        <p>Each project starts with a real problem — one we've encountered directly in clinical, behavioral health, or human-systems work — and is built to solve it.</p>
+      </div>
+
+      <div class="flagship-list">
+
+        <div class="flagship">
+          <div class="flagship-media"><img src="ember.webp" alt="Ember — Behavioral Health"></div>
+          <div class="flagship-body">
+            <span class="cat-tag cat-behavioral">Behavioral Health</span>
+            <h3>Ember</h3>
+            <p>The intelligent workspace for behavioral health professionals. AI-assisted documentation, treatment planning, and case management built around real clinical workflows.</p>
+            <a href="#" class="flagship-link">Learn more <svg viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+        </div>
+
+        <div class="flagship">
+          <div class="flagship-media"><img src="virgil.webp" alt="Virgil St. — Care Navigation"></div>
+          <div class="flagship-body">
+            <span class="cat-tag cat-nav">Care Navigation</span>
+            <h3>Virgil St.</h3>
+            <p>Helping people navigate housing, healthcare, benefits, food, employment, and recovery through one intelligent resource platform.</p>
+            <a href="#" class="flagship-link">Learn more <svg viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+        </div>
+
+        <div class="flagship">
+          <div class="flagship-media"><img src="rubix.webp" alt="Rubix — Human Modeling"></div>
+          <div class="flagship-body">
+            <span class="cat-tag cat-human">Human Modeling</span>
+            <h3>Rubix</h3>
+            <p>Mapping how people become who they are — through memory, experience, behavior, and lifelong psychological development.</p>
+            <a href="#" class="flagship-link">Learn more <svg viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+        </div>
+
+        <div class="flagship">
+          <div class="flagship-media"><img src="valid8.webp" alt="Valid8 — Relationship Intelligence"></div>
+          <div class="flagship-body">
+            <span class="cat-tag cat-human">Relationship Intelligence</span>
+            <h3>Valid8</h3>
+            <p>AI-powered conversation analysis that uncovers manipulation, emotional dynamics, attachment patterns, and relationship health.</p>
+            <a href="#" class="flagship-link">Learn more <svg viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- MISSION GRID (secondary / rest of portfolio) -->
+  <section class="mission-section" id="mission">
+    <div class="wrap" style="padding-top:100px; padding-bottom:100px;">
+      <div class="section-head" style="margin-bottom:56px;">
+        <div class="thesis-label">Organized by Mission</div>
+        <h2>Everything we build fits one of four missions.</h2>
+      </div>
+    </div>
+    <div class="mission-grid">
+      <div class="mission-card">
+        <span class="cat-tag cat-behavioral">Behavioral Health &amp; Recovery</span>
+        <ul>
+          <li>Ember <span class="tag">FLAGSHIP</span></li>
+          <li>Virgil St. <span class="tag">FLAGSHIP</span></li>
+          <li>Case Management Suite</li>
+        </ul>
+      </div>
+      <div class="mission-card">
+        <span class="cat-tag cat-human">Human Understanding</span>
+        <ul>
+          <li>Rubix <span class="tag">FLAGSHIP</span></li>
+          <li>Valid8 <span class="tag">FLAGSHIP</span></li>
+          <li>High Fidelity</li>
+        </ul>
+      </div>
+      <div class="mission-card">
+        <span class="cat-tag cat-personal">Personal AI</span>
+        <ul>
+          <li>Athena</li>
+          <li>Voice Studio</li>
+          <li>Hillary</li>
+        </ul>
+      </div>
+      <div class="mission-card">
+        <span class="cat-tag cat-creative">Creative Intelligence</span>
+        <ul>
+          <li>Fable</li>
+          <li>Madame Eve</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPROACH -->
+  <section class="section" id="approach">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="thesis-label">Approach</div>
+        <h2>Every project answers three questions.</h2>
+        <p>Before anything gets built, we're clear on the problem — and honest about why existing solutions fall short.</p>
+      </div>
+      <div class="approach-grid">
+        <div class="approach-card">
+          <div class="q">01</div>
+          <h4>What problem exists?</h4>
+          <p>We start from a real, observed problem — not a market opportunity. Most of our work traces back to something we encountered directly in clinical or human-systems work.</p>
+        </div>
+        <div class="approach-card">
+          <div class="q">02</div>
+          <h4>Why do current solutions fail?</h4>
+          <p>Legacy tools weren't built around how the work actually happens. We study the gap between what people need and what they're given before designing anything.</p>
+        </div>
+        <div class="approach-card">
+          <div class="q">03</div>
+          <h4>How does this solve it?</h4>
+          <p>Every product is judged by whether it measurably reduces the burden it was built to address — for the professional, the client, or both.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOUNDER -->
+  <section class="section" id="founder">
+    <div class="wrap">
+      <div class="founder">
+        <div class="founder-visual">
+          <div class="fv-mark">
+            <b>Brandon Vasquez</b>
+            Founder, Lifestream Labs
+          </div>
+        </div>
+        <div class="founder-body">
+          <div class="thesis-label">Founder</div>
+          <h2>From behind the camera to behind the case file to behind the model.</h2>
+          <p>Brandon's path to Lifestream Labs didn't start in a lab. It started in <strong>photography</strong> — learning to see people clearly, honestly, and with patience. That same attention carried into <strong>behavioral health and case management</strong>, where he spent years inside the systems meant to help people navigate housing, recovery, and care — and saw firsthand where those systems break down.</p>
+          <p>That combination — an eye for people, and hands-on experience with the tools meant to serve them — is what led him into <strong>AI development</strong>, and ultimately to founding Lifestream Labs: a company built on the belief that the best AI doesn't come from chasing trends, but from understanding people well enough to build for them honestly.</p>
+          <div class="founder-path">
+            <span class="path-step">Photography</span>
+            <span class="path-step">Behavioral Health</span>
+            <span class="path-step">Case Management</span>
+            <span class="path-step">AI Development</span>
+            <span class="path-step">Lifestream Labs</span>
+          </div>
+          <a href="#" class="flagship-link">Read the full story <svg viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BAND -->
+  <section class="cta-band">
+    <div class="wrap">
+      <h2>Build something that matters.</h2>
+      <a href="#work" class="btn-primary">
+        Explore Our Work
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <a href="#" class="brand">
+        <img src="logo.webp" alt="Lifestream Labs">
+        <span class="brand-name">LIFESTREAM<span>LABS</span></span>
+      </a>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h5>Company</h5>
+          <a href="#mission">Mission</a>
+          <a href="#approach">Approach</a>
+          <a href="#founder">Founder</a>
+        </div>
+        <div class="footer-col">
+          <h5>Work</h5>
+          <a href="#work">Ember</a>
+          <a href="#work">Virgil St.</a>
+          <a href="#work">Rubix</a>
+          <a href="#work">Valid8</a>
+        </div>
+        <div class="footer-col">
+          <h5>Connect</h5>
+          <a href="mailto:hello@lifestreamlabs.ai">hello@lifestreamlabs.ai</a>
+          <div class="socials" style="margin-top:6px;">
+            <a href="#" aria-label="LinkedIn">in</a>
+            <a href="#" aria-label="X">X</a>
+            <a href="#" aria-label="Instagram">IG</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Lifestream Labs. All rights reserved.</span>
+      <span>Built with intention, in the open.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
