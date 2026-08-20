@@ -202,17 +202,14 @@
   }
   .founder-visual{
     aspect-ratio:4/5; border-radius:20px; border:1px solid var(--line-strong);
-    background:
-      radial-gradient(ellipse at 30% 20%, rgba(111,140,255,0.18) 0%, transparent 55%),
-      linear-gradient(160deg, #10131c 0%, #06070a 100%);
+    background-image: url('founder.webp');
+    background-size:cover; background-position:center 18%;
     position:relative; overflow:hidden;
     display:flex; align-items:flex-end; padding:36px;
   }
   .founder-visual::before{
     content:''; position:absolute; inset:0;
-    background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
-    background-size:26px 26px;
-    opacity:0.5;
+    background:linear-gradient(to top, rgba(6,7,10,0.92) 0%, rgba(6,7,10,0.35) 45%, transparent 75%);
   }
   .founder-visual .fv-mark{
     position:relative; z-index:1; font-family:'Space Grotesk',sans-serif; font-size:13px; color:var(--ink-dim);
