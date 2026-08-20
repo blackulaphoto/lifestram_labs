@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ember — Case Management Built by Someone Who Did the Job | Lifestream Labs</title>
+<meta name="description" content="Ember is the intelligent case management workspace for behavioral health professionals — documentation, treatment planning, benefits, housing, and AI assistance in one platform.">
+<link rel="icon" href="logo.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #06070a;
+    --bg-raised: #0b0d12;
+    --line: rgba(255,255,255,0.08);
+    --line-strong: rgba(255,255,255,0.14);
+    --ink: #f2f3f5;
+    --ink-dim: #9aa0ab;
+    --ink-faint: #5b616c;
+    --accent: #6f8cff;
+    --accent-dim: rgba(111,140,255,0.5);
+    --behavioral: #ff8a5c;
+    --nav-cat: #6f8cff;
+    --human: #b98cff;
+    --personal: #5cd6c0;
+    --creative: #ff8ac4;
+    --maxw: 1180px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    font-weight:300;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;
+    letter-spacing:-0.02em;
+  }
+  a{color:inherit; text-decoration:none;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 32px;}
+  img{display:block; max-width:100%;}
+
+  /* ---------- NAV ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(6,7,10,0.72);
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    max-width:var(--maxw); margin:0 auto; padding:0 32px;
+    height:76px; display:flex; align-items:center; justify-content:space-between;
+  }
+  .brand{display:flex; align-items:center; gap:12px;}
+  .brand img{height:34px; width:34px;}
+  .brand-name{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:15px; letter-spacing:0.02em;}
+  .brand-name span{display:block; font-size:10px; font-weight:400; color:var(--ink-dim); letter-spacing:0.12em; margin-top:1px;}
+  .nav-links{display:flex; gap:40px; list-style:none;}
+  .nav-links a{font-size:13px; color:var(--ink-dim); letter-spacing:0.03em; transition:color .2s;}
+  .nav-links a:hover{color:var(--ink);}
+  .nav-cta{
+    font-size:13px; padding:10px 20px; border:1px solid var(--line-strong); border-radius:100px;
+    display:flex; align-items:center; gap:8px; transition:all .2s;
+  }
+  .nav-cta:hover{border-color:var(--accent); background:rgba(111,140,255,0.08);}
+  .nav-mobile{display:none;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:220px 0 100px;
+    position:relative;
+  }
+  .hero::before{
+    content:'';
+    position:absolute; top:-10%; right:-10%; width:60%; height:70%;
+    background:radial-gradient(ellipse at center, rgba(255,138,92,0.10) 0%, transparent 70%);
+    pointer-events:none; z-index:-1;
+  }
+  .btn-primary{
+    display:inline-flex; align-items:center; gap:10px;
+    background:var(--ink); color:#06070a; font-weight:500; font-size:14px;
+    padding:16px 30px; border-radius:100px; transition:transform .2s, box-shadow .2s;
+    font-family:'Inter',sans-serif;
+  }
+  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 8px 30px rgba(255,255,255,0.15);}
+  .btn-primary svg{transition:transform .2s;}
+  .btn-primary:hover svg{transform:translateX(3px);}
+  .btn-secondary{
+    display:inline-flex; align-items:center; gap:8px; font-size:14px; color:var(--ink-dim);
+    border-bottom:1px solid var(--line-strong); padding-bottom:4px; transition:color .2s, border-color .2s;
+  }
+  .btn-secondary:hover{color:var(--ink); border-color:var(--ink);}
+
+  /* ---------- SECTION HEADER ---------- */
+  .section{padding:110px 0; scroll-margin-top:100px;}
+  .section-head{margin-bottom:56px; max-width:640px;}
+  .section-head .thesis-label{margin-bottom:20px;}
+  .section-head h2{font-size:clamp(28px,3.4vw,42px); margin-bottom:18px;}
+  .section-head p{color:var(--ink-dim); font-size:16px; font-weight:300;}
+  .thesis-label{
+    font-size:11px; letter-spacing:0.18em; color:var(--ink-faint); text-transform:uppercase;
+  }
+
+  .cat-tag{
+    font-size:11px; letter-spacing:0.14em; text-transform:uppercase; font-weight:500;
+    display:inline-flex; align-items:center; gap:8px; width:fit-content;
+  }
+  .cat-tag::before{content:''; width:6px; height:6px; border-radius:50%;}
+  .cat-behavioral::before{background:var(--behavioral);} .cat-behavioral{color:var(--behavioral);}
+
+  /* ---------- CTA BAND ---------- */
+  .cta-band{
+    padding:100px 0; text-align:center; position:relative; border-top:1px solid var(--line);
+    overflow:hidden;
+  }
+  .cta-band::before{
+    content:''; position:absolute; top:0; left:50%; transform:translateX(-50%);
+    width:700px; height:460px;
+    background:radial-gradient(ellipse at center, rgba(255,138,92,0.14) 0%, transparent 70%);
+    pointer-events:none;
+  }
+  .cta-band::after{
+    content:''; position:absolute; inset:0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size:26px 26px;
+    -webkit-mask-image:radial-gradient(ellipse at center, black 0%, transparent 75%);
+    mask-image:radial-gradient(ellipse at center, black 0%, transparent 75%);
+    pointer-events:none;
+  }
+  .cta-band .thesis-label{position:relative; display:flex; justify-content:center; margin-bottom:22px;}
+  .cta-band h2{font-size:clamp(28px,4.2vw,48px); margin-bottom:14px; position:relative;}
+  .cta-band .cta-sub{position:relative; color:var(--ink-dim); font-size:16px; max-width:560px; margin:0 auto 36px; font-weight:300;}
+  .cta-band .btn-primary{position:relative;}
+
+  /* ---------- FOOTER ---------- */
+  footer{border-top:1px solid var(--line); padding:72px 0 40px; position:relative; overflow:hidden;}
+  footer::before{
+    content:''; position:absolute; inset:0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.045) 1px, transparent 1px);
+    background-size:26px 26px;
+    -webkit-mask-image:linear-gradient(to bottom, black 0%, transparent 85%);
+    mask-image:linear-gradient(to bottom, black 0%, transparent 85%);
+    pointer-events:none;
+  }
+  .footer-top{display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:60px; flex-wrap:wrap; gap:40px; position:relative;}
+  .footer-brand{max-width:280px;}
+  .footer-brand p{font-size:14px; color:var(--ink-dim); font-weight:300; margin-top:16px; line-height:1.7;}
+  .footer-cols{display:flex; gap:80px; flex:1; justify-content:flex-end;}
+  .footer-col h5{font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:18px; font-weight:500;}
+  .footer-col a, .footer-col span{display:block; font-size:14px; color:var(--ink-dim); margin-bottom:12px;}
+  .footer-col a:hover{color:var(--ink);}
+  .footer-bottom{
+    display:flex; justify-content:space-between; align-items:center; padding-top:32px; border-top:1px solid var(--line);
+    font-size:12.5px; color:var(--ink-faint); flex-wrap:wrap; gap:16px; position:relative;
+  }
+  .socials{display:flex; gap:18px;}
+  .socials a{color:var(--ink-faint); transition:color .2s;}
+  .socials a:hover{color:var(--ink);}
+  @media (max-width:700px){
+    .footer-cols{justify-content:flex-start; gap:48px;}
+  }
+
+  /* ---------- PRODUCT PAGE ---------- */
+  .breadcrumb{
+    padding:110px 0 0; font-size:12.5px; color:var(--ink-faint); display:flex; align-items:center; gap:8px;
+  }
+  .breadcrumb a{color:var(--ink-dim); transition:color .2s;}
+  .breadcrumb a:hover{color:var(--ink);}
+  .product-hero{padding-top:26px;}
+  .product-hero .cat-tag{margin-bottom:28px;}
+  .product-hero h1{font-size:clamp(34px,4.6vw,58px); max-width:820px; margin-bottom:30px; line-height:1.1;}
+  .product-hero .lede{font-size:20px; color:var(--ink); max-width:680px; margin-bottom:6px; font-weight:500; font-family:'Space Grotesk',sans-serif; line-height:1.4;}
+  .product-hero .lede.dim{color:var(--ink-faint); font-weight:500; margin-bottom:22px;}
+  .product-hero .body-copy{font-size:17px; color:var(--ink-dim); max-width:640px; margin-bottom:20px; font-weight:300;}
+  .product-tagline{
+    font-family:'Space Grotesk',sans-serif; font-size:15px; color:var(--behavioral); font-weight:600; margin:8px 0 40px; letter-spacing:0.01em;
+  }
+  .hero-cta-row{display:flex; align-items:center; gap:28px; flex-wrap:wrap;}
+  .product-hero-media{
+    margin-top:64px; border-radius:20px; border:1px solid var(--line-strong); overflow:hidden;
+    box-shadow:0 40px 100px -30px rgba(0,0,0,0.6);
+  }
+  .product-hero-media img{width:100%; display:block;}
+
+  /* problem / pull quote */
+  .problem-flow{display:flex; flex-direction:column; gap:0; max-width:640px; margin-bottom:36px;}
+  .problem-flow div{
+    font-size:16px; color:var(--ink-dim); padding:13px 0 13px 28px; border-left:1px solid var(--line-strong); position:relative;
+  }
+  .problem-flow div::before{
+    content:''; position:absolute; left:-5px; top:21px; width:9px; height:9px; border-radius:50%; background:var(--behavioral);
+  }
+  .body-copy{font-size:16px; color:var(--ink-dim); font-weight:300; max-width:600px; margin-bottom:8px;}
+  .pull-quote{
+    font-family:'Space Grotesk',sans-serif; font-size:clamp(22px,2.8vw,32px); font-weight:600; line-height:1.35;
+    max-width:720px; margin-top:28px;
+  }
+  .pull-quote .dim{color:var(--ink-faint);}
+
+  /* solution pills */
+  .pill-row{display:flex; flex-wrap:wrap; gap:10px; margin:32px 0 36px;}
+  .pill{
+    font-size:13.5px; padding:9px 18px; border-radius:100px; border:1px solid var(--line-strong);
+    color:var(--ink-dim); background:var(--bg-raised);
+  }
+
+  /* feature block: screenshot + copy */
+  .feature{padding:100px 0; border-top:1px solid var(--line);}
+  .feature-grid{display:grid; grid-template-columns:1fr; gap:48px;}
+  .feature-media{border-radius:18px; border:1px solid var(--line-strong); overflow:hidden; box-shadow:0 30px 80px -30px rgba(0,0,0,0.55);}
+  .feature-media img{width:100%; display:block;}
+  .feature-copy{max-width:660px;}
+  .feature-copy .thesis-label{margin-bottom:18px; display:block;}
+  .feature-copy h2{font-size:clamp(26px,3.2vw,40px); margin-bottom:20px;}
+  .feature-copy > p{color:var(--ink-dim); font-size:16px; margin-bottom:24px; font-weight:300; max-width:600px;}
+  .feature-list{list-style:none; display:grid; grid-template-columns:1fr 1fr; gap:10px 32px; max-width:620px; margin-bottom:8px;}
+  .feature-list li{
+    font-size:14.5px; color:var(--ink-dim); padding:10px 0 10px 20px; border-top:1px solid var(--line); position:relative;
+  }
+  .feature-list li::before{content:'—'; position:absolute; left:0; color:var(--ink-faint);}
+  .feature-list li:nth-child(-n+2){border-top:none;}
+  .feature-placeholder{
+    border-radius:18px; border:1px solid var(--line-strong); aspect-ratio:16/10; position:relative; overflow:hidden;
+    background:radial-gradient(ellipse at 30% 20%, rgba(255,138,92,0.14) 0%, transparent 55%), linear-gradient(160deg, #10131c 0%, #06070a 100%);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .feature-placeholder::before{
+    content:''; position:absolute; inset:0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
+    background-size:26px 26px; opacity:0.5;
+  }
+  .feature-placeholder span{position:relative; font-family:'Space Grotesk',sans-serif; font-size:13px; color:var(--ink-faint); letter-spacing:0.12em; text-transform:uppercase;}
+
+  /* module grid */
+  .module-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:44px;}
+  .module-card{border:1px solid var(--line); border-radius:16px; padding:26px 24px; background:var(--bg-raised); transition:border-color .2s;}
+  .module-card:hover{border-color:var(--line-strong);}
+  .module-card h4{font-size:16.5px; font-weight:600; margin-bottom:10px; font-family:'Space Grotesk',sans-serif;}
+  .module-card p{font-size:13.5px; color:var(--ink-dim); font-weight:300;}
+  .module-card.wide{grid-column:span 3; display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap; background:rgba(255,138,92,0.05); border-color:var(--line-strong);}
+  .module-card.wide h4{margin-bottom:4px;}
+  .module-card.wide p{font-size:14px; max-width:440px;}
+
+  /* AI split */
+  .ai-split{display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:start; margin-top:8px;}
+  .ai-col h4{font-size:12.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:20px;}
+  .ai-col ul{list-style:none;}
+  .ai-col li{font-size:16px; color:var(--ink-dim); padding:12px 0; border-top:1px solid var(--line); font-weight:300;}
+  .ai-col li:first-of-type{border-top:none;}
+  .ai-note{
+    padding:24px 26px; border-radius:14px; border:1px solid var(--line-strong); background:rgba(111,140,255,0.05);
+    font-size:15.5px; color:var(--ink-dim); font-weight:300;
+  }
+  .ai-note strong{color:var(--ink); font-weight:500;}
+  .ai-note + .ai-note{margin-top:14px;}
+
+  @media (max-width:900px){
+    .nav-links{display:none;}
+    .feature-grid{grid-template-columns:1fr;}
+    .module-grid{grid-template-columns:1fr 1fr;}
+    .module-card.wide{grid-column:span 2;}
+    .ai-split{grid-template-columns:1fr; gap:36px;}
+    .feature-list{grid-template-columns:1fr;}
+    .feature-list li:nth-child(2){border-top:1px solid var(--line);}
+    .hero{padding:160px 0 70px;}
+    .section, .feature{padding:80px 0;}
+  }
+  @media (max-width:560px){
+    .module-grid{grid-template-columns:1fr;}
+    .module-card.wide{grid-column:span 1;}
+    nav{padding:0 20px;}
+    .wrap{padding:0 20px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="index.html" class="brand">
+      <img src="logo.webp" alt="Lifestream Labs">
+      <span class="brand-name">LIFESTREAM<span>LABS</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#work">Work</a></li>
+      <li><a href="index.html#mission">Mission</a></li>
+      <li><a href="index.html#approach">Approach</a></li>
+      <li><a href="index.html#founder">Founder</a></li>
+    </ul>
+    <a href="index.html#work" class="nav-cta">All Products
+      <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </nav>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="breadcrumb" style="padding-top:0; margin-bottom:22px;">
+        <a href="index.html">Lifestream Labs</a> <span>/</span> <span style="color:var(--ink-dim);">Ember</span>
+      </div>
+      <div class="product-hero">
+        <span class="cat-tag cat-behavioral">Behavioral Health</span>
+        <h1>The modern case management platform built by someone who actually did the job.</h1>
+        <p class="lede">Most case management software was built for billing.</p>
+        <p class="lede dim">Ember was built for people.</p>
+        <p class="body-copy">Created by a former substance abuse case manager, Ember combines clinical documentation, intelligent automation, resource management, and AI assistance into one unified workspace — so professionals spend less time fighting software and more time helping clients.</p>
+        <div class="product-tagline">Designed for behavioral health. Built for the future.</div>
+        <div class="hero-cta-row">
+          <a href="mailto:hello@lifestreamlabs.ai?subject=Ember%20demo%20request" class="btn-primary">
+            Request a walkthrough
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="index.html#work" class="btn-secondary">← Back to all products</a>
+        </div>
+      </div>
+      <div class="product-hero-media">
+        <img src="ember.webp" alt="Ember case management workspace">
+      </div>
+    </div>
+  </section>
+
+  <!-- THE PROBLEM -->
+  <section class="section" id="problem">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="thesis-label">The Problem</div>
+        <h2 style="margin-top:20px;">Case managers are drowning in disconnected systems.</h2>
+      </div>
+      <div class="problem-flow">
+        <div>One application stores client information.</div>
+        <div>Another manages documentation.</div>
+        <div>Another tracks appointments.</div>
+        <div>Another contains housing resources.</div>
+        <div>Another handles benefits.</div>
+      </div>
+      <p class="body-copy">The result is endless clicking, duplicate documentation, forgotten follow-ups, and hours of administrative work that steal time away from clients.</p>
+      <p class="pull-quote">Technology should reduce the workload. <span class="dim">Instead, it often creates it.</span></p>
+    </div>
+  </section>
+
+  <!-- OUR SOLUTION -->
+  <section class="section" id="solution" style="border-top:1px solid var(--line); padding-top:100px;">
+    <div class="wrap">
+      <div class="section-head" style="margin-bottom:0;">
+        <div class="thesis-label">Our Solution</div>
+        <h2 style="margin-top:20px;">Ember brings everything together.</h2>
+      </div>
+      <div class="pill-row">
+        <span class="pill">Case Management</span>
+        <span class="pill">Documentation</span>
+        <span class="pill">Treatment Planning</span>
+        <span class="pill">Benefits</span>
+        <span class="pill">Housing</span>
+        <span class="pill">Legal</span>
+        <span class="pill">Medical</span>
+        <span class="pill">AI Assistance</span>
+        <span class="pill">Smart Reminders</span>
+      </div>
+      <p class="body-copy">Instead of opening ten different systems, everything lives inside one intelligent workspace designed around the actual workflow of behavioral health professionals.</p>
+    </div>
+  </section>
+
+  <!-- DASHBOARD -->
+  <section class="feature" id="dashboard">
+    <div class="wrap">
+      <div class="feature-grid">
+        <div class="feature-copy">
+          <span class="thesis-label">Dashboard</span>
+          <h2>Your entire caseload. One screen.</h2>
+          <p>The Dashboard is the command center of Ember. Rather than searching through menus or multiple applications, staff immediately see what matters most:</p>
+        </div>
+        <ul class="feature-list">
+          <li>Active caseload</li>
+          <li>High-risk clients</li>
+          <li>Daily reminders</li>
+          <li>Upcoming deadlines</li>
+          <li>Documentation status</li>
+          <li>Supervisor alerts</li>
+          <li>AI recommendations</li>
+        </ul>
+        <p class="body-copy">Every section is designed to reduce cognitive overload so clinicians know exactly what requires attention next.</p>
+        <div class="feature-media">
+          <img src="ember-dashboard.webp" alt="Ember dashboard — caseload, daily reminders, and FMLA tracker overview">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SMART MODULES -->
+  <section class="feature" id="modules">
+    <div class="wrap">
+      <div class="feature-grid">
+        <div class="feature-media">
+          <img src="ember-modules.webp" alt="Ember available services — case management, housing, benefits, legal, and more">
+        </div>
+        <div class="feature-copy">
+          <span class="thesis-label">Smart Modules</span>
+          <h2>Every tool. One platform.</h2>
+          <p>Most organizations purchase multiple software products. Ember replaces them with a single ecosystem.</p>
+        </div>
+        <div class="module-grid">
+          <div class="module-card">
+            <h4>Case Management</h4>
+            <p>Track client progress from intake through discharge.</p>
+          </div>
+          <div class="module-card">
+            <h4>Benefits</h4>
+            <p>Guide clients through Medicaid, SNAP, SSI, SSDI, and community assistance.</p>
+          </div>
+          <div class="module-card">
+            <h4>Housing</h4>
+            <p>Manage placements, shelters, sober living, and permanent housing resources.</p>
+          </div>
+          <div class="module-card">
+            <h4>Documentation</h4>
+            <p>Generate clinical notes, letters, treatment plans, and reports using AI while maintaining professional standards.</p>
+          </div>
+          <div class="module-card">
+            <h4>Legal</h4>
+            <p>Track court dates, probation requirements, legal referrals, and compliance documentation.</p>
+          </div>
+          <div class="module-card">
+            <h4>Job Search</h4>
+            <p>Help clients return to work with resume creation, employment tracking, and workforce resources.</p>
+          </div>
+          <div class="module-card wide">
+            <div>
+              <h4>Smart Daily</h4>
+              <p>Prioritize today's work automatically. No more wondering what to do next.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLIENT WORKSPACE -->
+  <section class="feature" id="workspace">
+    <div class="wrap">
+      <div class="feature-grid">
+        <div class="feature-copy">
+          <span class="thesis-label">Client Workspace</span>
+          <h2>Every client has their own command center.</h2>
+          <p>Instead of digging through folders and scattered notes, every client receives a complete workspace. Staff can instantly view:</p>
+        </div>
+        <ul class="feature-list">
+          <li>Housing status</li>
+          <li>Employment</li>
+          <li>Benefits</li>
+          <li>Legal involvement</li>
+          <li>Medical information</li>
+          <li>Appointments</li>
+          <li>Documents</li>
+          <li>Release of Information forms</li>
+          <li>Communication history</li>
+          <li>Tasks</li>
+          <li>Timeline</li>
+        </ul>
+        <p class="body-copy">Everything stays connected so the entire care team sees the same picture.</p>
+        <div class="feature-media">
+          <img src="ember-docs.webp" alt="Ember documentation and notes command center">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GROUP FACILITATION -->
+  <section class="feature" id="groups">
+    <div class="wrap">
+      <div class="feature-grid">
+        <div class="feature-placeholder">
+          <span>Group Facilitation</span>
+        </div>
+        <div class="feature-copy">
+          <span class="thesis-label">Group Facilitation</span>
+          <h2>Build better groups in minutes.</h2>
+          <p>Running therapeutic groups shouldn't require hours of preparation. Ember includes a growing library of evidence-based topics that can be customized or expanded with AI.</p>
+        </div>
+        <ul class="feature-list">
+          <li>Browse professionally organized topics</li>
+          <li>Generate new curriculum instantly</li>
+          <li>Build complete lesson plans</li>
+          <li>Create printable handouts</li>
+          <li>Organize video libraries</li>
+          <li>Schedule recurring groups</li>
+          <li>Track attendance and participation</li>
+        </ul>
+        <p class="body-copy">The result is less preparation time and more meaningful conversations.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUILT WITH AI -->
+  <section class="section" id="ai" style="border-top:1px solid var(--line);">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="thesis-label">Built With AI Where It Actually Helps</div>
+        <h2 style="margin-top:20px;">Artificial intelligence should remove busy work. Not replace professionals.</h2>
+      </div>
+      <div class="ai-split">
+        <div class="ai-col">
+          <h4>Ember uses AI to assist with</h4>
+          <ul>
+            <li>Clinical documentation</li>
+            <li>Treatment plans</li>
+            <li>Case notes</li>
+            <li>Letters</li>
+            <li>Summaries</li>
+            <li>Resource discovery</li>
+            <li>Workflow recommendations</li>
+            <li>Documentation review</li>
+          </ul>
+        </div>
+        <div class="ai-col">
+          <h4>What never changes</h4>
+          <div class="ai-note"><strong>Everything remains under clinician control.</strong> AI drafts, suggests, and organizes — it never finalizes a clinical decision on its own.</div>
+          <div class="ai-note"><strong>The professional always makes the final decision.</strong> Every note, plan, and recommendation is reviewed and approved by the clinician before it becomes part of the record.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUILT BY EXPERIENCE -->
+  <section class="section" id="experience" style="border-top:1px solid var(--line); padding-top:100px;">
+    <div class="wrap">
+      <div class="thesis-label">Built by Experience</div>
+      <p class="pull-quote" style="margin-top:20px;">Ember wasn't created in a boardroom. <span class="dim">It was built from firsthand experience working with clients navigating addiction, homelessness, mental illness, unemployment, housing instability, court systems, and recovery.</span></p>
+      <p class="body-copy" style="margin-top:24px;">Every workflow exists because it solves a real problem encountered in the field.</p>
+    </div>
+  </section>
+
+  <!-- VISION / CTA -->
+  <section class="cta-band">
+    <div class="wrap">
+      <div class="thesis-label">The Vision</div>
+      <h2>Behavioral health deserves better software.</h2>
+      <p class="cta-sub">Not software adapted from hospitals. Not billing software pretending to support case management. A platform designed specifically for the people helping society's most vulnerable. That's Ember.</p>
+      <a href="index.html#work" class="btn-primary">
+        Explore more of our work
+        <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L9 4M13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="brand">
+          <img src="logo.webp" alt="Lifestream Labs">
+          <span class="brand-name">LIFESTREAM<span>LABS</span></span>
+        </a>
+        <p>AI systems for behavioral healthcare, human understanding, and creative intelligence — built by people who've worked inside the problems they're solving.</p>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h5>Company</h5>
+          <a href="index.html#mission">Mission</a>
+          <a href="index.html#approach">Approach</a>
+          <a href="index.html#founder">Founder</a>
+        </div>
+        <div class="footer-col">
+          <h5>Work</h5>
+          <a href="ember.html">Ember</a>
+          <a href="index.html#work">Virgil St.</a>
+          <a href="index.html#work">Rubix</a>
+          <a href="index.html#work">Valid8</a>
+        </div>
+        <div class="footer-col">
+          <h5>Connect</h5>
+          <a href="mailto:hello@lifestreamlabs.ai">hello@lifestreamlabs.ai</a>
+          <div class="socials" style="margin-top:6px;">
+            <a href="#" aria-label="LinkedIn">in</a>
+            <a href="#" aria-label="X">X</a>
+            <a href="#" aria-label="Instagram">IG</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Lifestream Labs. All rights reserved.</span>
+      <span>Built with intention, in the open.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
