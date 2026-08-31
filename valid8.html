@@ -218,11 +218,17 @@
   .testimonial-card p::before{content:'"'; color:var(--human);}
   .testimonial-card p::after{content:'"'; color:var(--human);}
 
+  /* app tour */
+  .tour-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:28px; margin-top:44px;}
+  .tour-item img{border-radius:16px; border:1px solid var(--line-strong); box-shadow:0 24px 60px -24px rgba(0,0,0,0.55); width:100%;}
+  .tour-item p{font-size:13.5px; color:var(--ink-dim); margin-top:14px; text-align:center; font-family:'Space Grotesk',sans-serif; font-weight:500;}
+
   @media (max-width:900px){
     .nav-links{display:none;}
     .card-grid{grid-template-columns:1fr 1fr;}
     .showcase-grid{grid-template-columns:1fr;}
     .testimonial-grid{grid-template-columns:1fr;}
+    .tour-grid{grid-template-columns:1fr 1fr;}
     .hero{padding:160px 0 70px;}
     .section, .feature{padding:80px 0;}
   }
@@ -364,6 +370,42 @@
         <li>Relationship health</li>
         <li>Healthier ways to respond</li>
       </ul>
+    </div>
+  </section>
+
+  <!-- APP TOUR -->
+  <section class="section" id="tour" style="border-top:1px solid var(--line);">
+    <div class="wrap">
+      <div class="section-head" style="margin-bottom:0;">
+        <div class="thesis-label">Inside The App</div>
+        <h2 style="margin-top:20px;">Every step, built to feel like support — not surveillance.</h2>
+      </div>
+      <div class="tour-grid">
+        <div class="tour-item">
+          <img src="valid8-newanalysis.webp" alt="Valid8 — New Analysis screen, paste a conversation or upload screenshots to begin">
+          <p>Paste a conversation or upload screenshots</p>
+        </div>
+        <div class="tour-item">
+          <img src="valid8-manip-list.webp" alt="Valid8 — Manipulation Analysis screen listing detected tactics with confidence levels">
+          <p>Detected tactics, ranked by confidence</p>
+        </div>
+        <div class="tour-item">
+          <img src="valid8-manip-detail.webp" alt="Valid8 — expanded gaslighting analysis with quoted evidence from the conversation">
+          <p>Evidence and context for every finding</p>
+        </div>
+        <div class="tour-item">
+          <img src="valid8-coach.webp" alt="Valid8 — Coach chat offering guidance and today's insight on the pursue-withdraw cycle">
+          <p>An AI coach to help you process it</p>
+        </div>
+        <div class="tour-item">
+          <img src="valid8-history.webp" alt="Valid8 — History screen tracking relational health scores across conversations over time">
+          <p>Track relationship health over time</p>
+        </div>
+        <div class="tour-item">
+          <img src="valid8-login.webp" alt="Valid8 — private sign-in screen, analyses stay private to your account">
+          <p>Private by default — your analyses stay yours</p>
+        </div>
+      </div>
     </div>
   </section>
 
